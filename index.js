@@ -556,7 +556,7 @@ function setupEventListeners() {
     });
     
     userHistoryBtn.addEventListener('click', () => {
-        window.location.href = 'users-h.html';
+        window.location.href = 'admin-user-history.html';
     });
     
     userOrdersBtn.addEventListener('click', () => {
