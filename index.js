@@ -552,7 +552,7 @@ function setupEventListeners() {
     });
     
     userDetailsBtn.addEventListener('click', () => {
-        window.location.href = '/admin/user-details.html';
+        window.location.href = 'user-details.html';
     });
     
     userHistoryBtn.addEventListener('click', () => {
@@ -564,7 +564,7 @@ function setupEventListeners() {
     });
     
     userAlertsBtn.addEventListener('click', () => {
-        window.location.href = '/admin/admin-alert.html';
+        window.location.href = 'admin-alert.html';
     });
     
     adminTrackingBtn.addEventListener('click', () => {
