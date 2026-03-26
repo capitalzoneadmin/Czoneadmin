@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Show Items - CZone Admin</title>
+    <link rel="stylesheet" href="admin-index.css">
+    <link rel="stylesheet" href="show-items.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="loading"><div class="spinner"></div><p>CZone Admin</p></div>
+    <div class="app" id="mainContent">
+        <!-- Header -->
+        <header>
+            <div class="header-top">
+                <div class="logo-area">
+                    <img id="adminLogo" class="logo" src="/IMG_20260313_225034.png" alt="CZ">
+                    <span class="shop-name">Items</span>
+                </div>
+                <div class="header-icons">
+                    <button class="icon-btn" id="backBtn"><i class="fas fa-arrow-left"></i></button>
+                    <button class="icon-btn" id="refreshBtn"><i class="fas fa-sync-alt"></i></button>
+                </div>
+            </div>
+            <!-- Selection toolbar (appears when items are selected) -->
+            <div class="selection-header" id="selectionHeader">
+                <span class="selection-info"><span id="selectedCount">0</span> selected</span>
+                <div class="selection-actions">
+                    <button class="bulk-action-btn" id="bulkDeliveryBtn"><i class="fas fa-truck"></i> Delivery</button>
+                    <button class="bulk-action-btn" id="bulkPromoBtn"><i class="fas fa-tag"></i> Promo</button>
+                    <button class="bulk-action-btn danger" id="bulkDeleteBtn"><i class="fas fa-trash-alt"></i> Delete</button>
+                    <button class="cancel-select-btn" id="cancelSelectBtn"><i class="fas fa-times"></i></button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Search & Filters -->
+        <div class="search-section">
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search by title or category...">
+                <i class="fas fa-times clear-search" id="clearSearch"></i>
+            </div>
+            <div class="filter-tabs">
+                <button class="filter-tab active" data-filter="all">All</button>
+                <button class="filter-tab" data-filter="available">Available</button>
+                <button class="filter-tab" data-filter="sold">Sold Out</button>
+                <button class="filter-tab" data-filter="lowstock">Low Stock</button>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card"><span class="stat-value" id="totalItems">0</span><span class="stat-label">Total</span></div>
+            <div class="stat-card"><span class="stat-value" id="availableItems">0</span><span class="stat-label">Available</span></div>
+            <div class="stat-card"><span class="stat-value" id="soldItems">0</span><span class="stat-label">Sold Out</span></div>
+            <div class="stat-card"><span class="stat-value" id="lowStockItems">0</span><span class="stat-label">Low Stock</span></div>
+        </div>
+
+        <!-- Items Grid -->
+        <div id="noItems" class="no-items">
+            <i class="fas fa-box-open"></i>
+            <h3>No Items Found</h3>
+            <button class="add-item-btn" onclick="window.location.href='add-items.html'">+ Add New Item</button>
+        </div>
+        <div class="items-grid" id="itemsGrid"></div>
+
+        <!-- Bottom Navigation (centered) -->
+        <nav class="bottom-nav">
+            <div class="nav-item" data-page="index.html"><i class="fas fa-home"></i><span>Home</span></div>
+            <div class="nav-item" data-page="add-items.html"><i class="fas fa-plus-circle"></i><span>Add</span></div>
+            <div class="nav-item active"><i class="fas fa-list"></i><span>Items</span></div>
+            <div class="nav-item" data-page="admin-account.html"><i class="fas fa-user"></i><span>Account</span></div>
+        </nav>
+    </div>
+
+    <!-- Edit Item Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <i class="fas fa-arrow-left" id="closeEditModal"></i>
+                <h3>Edit Item</h3>
+                <i class="fas fa-times" id="closeEditModalBtn"></i>
+            </div>
+            <div class="modal-body" id="editModalBody"></div>
+        </div>
+    </div>
+
+    <!-- Add Delivery Fee Modal -->
+    <div id="addDeliveryModal" class="modal-small">
+        <div class="modal-small-content">
+            <h3>Add Customer Delivery Fee</h3>
+            <div class="form-group">
+                <label>Search User</label>
+                <input type="text" id="deliveryUserSearch" placeholder="Name or phone...">
+                <div class="user-list" id="deliveryUserList"></div>
+            </div>
+            <div class="form-group">
+                <label>Fee (LKR)</label>
+                <input type="number" id="deliveryFeeInput" min="0" step="1">
+            </div>
+            <div class="modal-small-buttons">
+                <button class="modal-btn secondary" id="cancelAddDelivery">Cancel</button>
+                <button class="modal-btn primary" id="saveAddDelivery">Add</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Promo Code Modal -->
+    <div id="addPromoModal" class="modal-small">
+        <div class="modal-small-content">
+            <h3>Add Customer Promo Code</h3>
+            <div class="form-group">
+                <label>Search User</label>
+                <input type="text" id="promoUserSearch" placeholder="Name or phone...">
+                <div class="user-list" id="promoUserList"></div>
+            </div>
+            <div class="form-group">
+                <label>Promo Code</label>
+                <input type="text" id="promoCodeInput" placeholder="e.g. SAVE10" maxlength="20">
+            </div>
+            <div class="form-group">
+                <label>Type</label>
+                <select id="promoTypeSelect">
+                    <option value="percentage">Percentage (%)</option>
+                    <option value="fixed">Fixed (LKR)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Value</label>
+                <input type="number" id="promoValueInput" min="0" step="0.01">
+            </div>
+            <div class="modal-small-buttons">
+                <button class="modal-btn secondary" id="cancelAddPromo">Cancel</button>
+                <button class="modal-btn primary" id="saveAddPromo">Add</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bulk Delivery Modal -->
+    <div id="bulkDeliveryModal" class="modal-small">
+        <div class="modal-small-content">
+            <h3>Set Delivery Fee</h3>
+            <div class="form-group">
+                <label>Fee (LKR)</label>
+                <input type="number" id="bulkDeliveryFee" min="0" value="350">
+            </div>
+            <div class="form-group">
+                <label>Apply to</label>
+                <select id="bulkDeliveryTarget">
+                    <option value="all">All Users (global)</option>
+                    <option value="selected">Selected Users</option>
+                </select>
+            </div>
+            <div class="form-group" id="bulkDeliveryUserGroup" style="display: none;">
+                <label>Search & Select Users</label>
+                <input type="text" id="bulkDeliveryUserSearch" placeholder="Name or phone...">
+                <div class="user-list" id="bulkDeliveryUserList"></div>
+            </div>
+            <div class="modal-small-buttons">
+                <button class="modal-btn secondary" id="cancelBulkDelivery">Cancel</button>
+                <button class="modal-btn primary" id="applyBulkDelivery">Apply</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bulk Promo Modal -->
+    <div id="bulkPromoModal" class="modal-small">
+        <div class="modal-small-content">
+            <h3>Set Promo Code</h3>
+            <div class="form-group">
+                <label>Code</label>
+                <input type="text" id="bulkPromoCode" placeholder="e.g. SAVE10">
+            </div>
+            <div class="form-group">
+                <label>Type</label>
+                <select id="bulkPromoType">
+                    <option value="percentage">Percentage</option>
+                    <option value="fixed">Fixed (LKR)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Value</label>
+                <input type="number" id="bulkPromoValue" min="0" step="0.01">
+            </div>
+            <div class="form-group">
+                <label>Apply to</label>
+                <select id="bulkPromoTarget">
+                    <option value="all">All Users</option>
+                    <option value="selected">Selected Users</option>
+                </select>
+            </div>
+            <div class="form-group" id="bulkPromoUserGroup" style="display: none;">
+                <label>Search & Select Users</label>
+                <input type="text" id="bulkPromoUserSearch" placeholder="Name or phone...">
+                <div class="user-list" id="bulkPromoUserList"></div>
+            </div>
+            <div class="modal-small-buttons">
+                <button class="modal-btn secondary" id="cancelBulkPromo">Cancel</button>
+                <button class="modal-btn primary" id="applyBulkPromo">Apply</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteConfirmModal" class="modal-small">
+        <div class="modal-small-content">
+            <div class="modal-small-icon"><i class="fas fa-exclamation-triangle"></i></div>
+            <h3>Delete Items</h3>
+            <p>Are you sure you want to delete <span id="deleteCount">0</span> selected item(s)?</p>
+            <div class="modal-small-buttons">
+                <button class="modal-btn secondary" id="cancelDelete">Cancel</button>
+                <button class="modal-btn danger" id="confirmDelete">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
+    <script src="show-items.js"></script>
+</body>
+</html>

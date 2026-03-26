@@ -1,0 +1,92 @@
+<!<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>User Details - CZone Admin</title>
+    <link rel="stylesheet" href="admin-index.css">
+    <link rel="stylesheet" href="user-details.css">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="loading"><div class="spinner"></div><p>CZone Admin</p></div>
+    <div class="app" id="mainContent">
+        <!-- Header -->
+        <header>
+            <div class="header-top">
+                <div class="logo-area">
+                    <img id="adminLogo" class="logo" src="/IMG_20260313_225034.png" alt="CZ">
+                    <span class="shop-name">User Details</span>
+                </div>
+                <div class="header-icons">
+                    <button class="icon-btn" id="backBtn"><i class="fas fa-arrow-left"></i></button>
+                    <button class="icon-btn" id="refreshBtn"><i class="fas fa-sync-alt"></i></button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Search -->
+        <div class="search-section">
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search by name or phone...">
+                <i class="fas fa-times clear-search" id="clearSearch"></i>
+            </div>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="filter-tabs">
+            <button class="filter-tab active" data-filter="all">All Users</button>
+            <button class="filter-tab" data-filter="pending">Pending</button>
+            <button class="filter-tab" data-filter="active">Active</button>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card"><span class="stat-value" id="totalUsers">0</span><span class="stat-label">Total</span></div>
+            <div class="stat-card"><span class="stat-value" id="activeUsers">0</span><span class="stat-label">Active</span></div>
+            <div class="stat-card"><span class="stat-value" id="pendingUsers">0</span><span class="stat-label">Pending</span></div>
+        </div>
+
+        <!-- Users List -->
+        <div id="noUsers" class="no-users">
+            <i class="fas fa-users-slash"></i>
+            <h3>No Users Found</h3>
+        </div>
+        <div class="users-list" id="usersList"></div>
+
+        <!-- Bottom Navigation (now centered) -->
+        <nav class="bottom-nav">
+            <div class="nav-item" data-page="index.html"><i class="fas fa-home"></i><span>Home</span></div>
+            <div class="nav-item" data-page="add-items.html"><i class="fas fa-plus-circle"></i><span>Add</span></div>
+            <div class="nav-item" data-page="show-items.html"><i class="fas fa-list"></i><span>Items</span></div>
+            <div class="nav-item active"><i class="fas fa-users"></i><span>Users</span></div>
+            <div class="nav-item" data-page="admin-account.html"><i class="fas fa-user"></i><span>Account</span></div>
+        </nav>
+    </div>
+
+    <!-- Edit User Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <i class="fas fa-arrow-left" id="closeEditModal"></i>
+                <h3>Edit User</h3>
+                <i class="fas fa-times" id="closeEditModalBtn"></i>
+            </div>
+            <div class="modal-body" id="editModalBody"></div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
+    <script src="user-details.js"></script>
+</body>
+</html>

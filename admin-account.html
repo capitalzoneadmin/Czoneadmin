@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Account - CZone Admin</title>
+    <link rel="stylesheet" href="admin-account.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading">
+        <div class="spinner"></div>
+        <p>CZone Admin</p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="app" id="mainContent">
+        <!-- Header -->
+        <header>
+            <div class="header-top">
+                <div class="logo-area">
+                    <i class="fas fa-arrow-left" id="backBtn"></i>
+                    <span class="shop-name">My Account</span>
+                </div>
+                <div class="header-icons">
+                    <i class="fas fa-home" id="homeIcon"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Profile Card -->
+        <div class="profile-card">
+            <div class="profile-icon">
+                <img id="profileLogo" class="profile-logo" src="/IMG_20260313_225034.png" alt="Capital Zone">
+            </div>
+            <div class="profile-info">
+                <div class="info-row">
+                    <span class="info-label">Username</span>
+                    <div class="info-value editable" id="usernameDisplay" onclick="editField('username')"></div>
+                    <div class="edit-input-container" id="usernameEdit" style="display: none;">
+                        <input type="text" id="usernameInput" class="edit-input" placeholder="Enter username">
+                        <div class="edit-actions">
+                            <button class="edit-save" onclick="saveField('username')"><i class="fas fa-check"></i> Save</button>
+                            <button class="edit-cancel" onclick="cancelEdit('username')"><i class="fas fa-times"></i> Cancel</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Phone Number</span>
+                    <div class="info-value editable" id="phoneDisplay" onclick="editField('phone')"></div>
+                    <div class="edit-input-container" id="phoneEdit" style="display: none;">
+                        <input type="tel" id="phoneInput" class="edit-input" placeholder="Enter phone number">
+                        <div class="edit-actions">
+                            <button class="edit-save" onclick="saveField('phone')"><i class="fas fa-check"></i> Save</button>
+                            <button class="edit-cancel" onclick="cancelEdit('phone')"><i class="fas fa-times"></i> Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Logout Button -->
+        <button class="logout-btn" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+
+        <!-- About Section -->
+        <div class="about-section">
+            <div class="about-item" id="aboutUs">
+                <i class="fas fa-info-circle"></i>
+                <span>About Us</span>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="about-item" id="privacyPolicy">
+                <i class="fas fa-shield-alt"></i>
+                <span>Privacy & Policy</span>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <div class="nav-item" data-page="admin-index.html"><i class="fas fa-home"></i><span>Home</span></div>
+            <div class="nav-item" data-page="add-items.html"><i class="fas fa-plus-circle"></i><span>Add</span></div>
+            <div class="nav-item" data-page="show-items.html"><i class="fas fa-list"></i><span>Items</span></div>
+            <div class="nav-item" data-page="user-orders.html"><i class="fas fa-truck"></i><span>Orders</span></div>
+            <div class="nav-item active"><i class="fas fa-user"></i><span>Account</span></div>
+        </nav>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
+    <script src="admin-account.js"></script>
+</body>
+</html>

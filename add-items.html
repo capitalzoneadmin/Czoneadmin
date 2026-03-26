@@ -1,0 +1,1725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Add Items - CZone Admin</title>
+    <link rel="stylesheet" href="admin-index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+/* admin-index.css - Complete styles for Capital Zone Admin Panel */
+/* This file provides the base styling for all admin pages including add-items.html */
+
+/* ========== RESET & GLOBAL ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #f5f7fb;
+    color: #1e293b;
+    line-height: 1.5;
+    overflow-x: hidden;
+}
+
+/* ========== LOADING SCREEN ========== */
+#loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+#loading.hide {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(255,255,255,0.3);
+    border-top: 4px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#loading p {
+    color: white;
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+/* ========== APP CONTAINER ========== */
+.app {
+    min-height: 100vh;
+    padding-bottom: 70px;
+}
+
+/* ========== HEADER ========== */
+header {
+    background: white;
+    padding: 15px 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.shop-name {
+    font-size: 18px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.header-icons {
+    display: flex;
+    gap: 12px;
+}
+
+.header-icons button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #64748b;
+    transition: color 0.3s;
+}
+
+.header-icons button:hover {
+    color: #667eea;
+}
+
+/* ========== BOTTOM NAVIGATION ========== */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 20px 20px;
+    box-shadow: 0 -2px 15px rgba(0,0,0,0.08);
+    z-index: 100;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    color: #94a3b8;
+    transition: color 0.3s;
+    font-size: 12px;
+}
+
+.nav-item i {
+    font-size: 22px;
+}
+
+.nav-item.active {
+    color: #667eea;
+}
+
+.nav-item:hover:not(.active) {
+    color: #475569;
+}
+
+/* ========== FORM CONTAINER ========== */
+.form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* ========== PAGE HEADER (for add-items) ========== */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 0 20px;
+}
+
+.page-header h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.page-header h2 i {
+    color: #667eea;
+}
+
+.back-btn {
+    width: 40px;
+    height: 40px;
+    background: #f1f5f9;
+    border: none;
+    border-radius: 12px;
+    color: #475569;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.back-btn:hover {
+    background: #667eea;
+    color: white;
+    transform: translateX(-3px);
+}
+
+/* ========== FORM SECTIONS ========== */
+.form-section {
+    background: white;
+    border-radius: 24px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: box-shadow 0.3s;
+}
+
+.form-section:hover {
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.form-section h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-left: 3px solid #667eea;
+    padding-left: 12px;
+}
+
+.form-section h3 i {
+    color: #667eea;
+    font-size: 18px;
+}
+
+.required {
+    color: #ef4444;
+    margin-left: 3px;
+}
+
+/* ========== FORM GROUPS ========== */
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 16px;
+}
+
+.form-row .form-group {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: #475569;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 14px;
+    transition: all 0.3s;
+    font-family: 'Inter', sans-serif;
+    background: white;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+    outline: none;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.error-message {
+    color: #ef4444;
+    font-size: 12px;
+    margin-top: 5px;
+    min-height: 18px;
+}
+
+/* ========== IMAGE UPLOAD ========== */
+.image-upload-area {
+    border: 2px dashed #cbd5e1;
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-bottom: 15px;
+    background: #fafcff;
+}
+
+.image-upload-area:hover {
+    border-color: #667eea;
+    background: #f8faff;
+    transform: translateY(-2px);
+}
+
+.image-upload-area i {
+    font-size: 42px;
+    color: #667eea;
+    margin-bottom: 12px;
+}
+
+.image-upload-area p {
+    color: #475569;
+    font-size: 14px;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.image-upload-area small {
+    color: #94a3b8;
+    font-size: 12px;
+}
+
+.image-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.image-preview-item {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    transition: all 0.3s;
+    background: #f1f5f9;
+}
+
+.image-preview-item:hover {
+    border-color: #667eea;
+    transform: scale(1.02);
+}
+
+.image-preview-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.image-preview-item .remove-image {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 26px;
+    height: 26px;
+    background: rgba(239,68,68,0.9);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    transition: all 0.3s;
+    opacity: 0;
+}
+
+.image-preview-item:hover .remove-image {
+    opacity: 1;
+}
+
+.image-preview-item .remove-image:hover {
+    background: #dc2626;
+    transform: scale(1.1);
+}
+
+/* ========== VARIATIONS SECTION ========== */
+.variation-section {
+    background: #f8fafc;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 5px;
+}
+
+.variation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.variation-header h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.add-btn {
+    padding: 8px 16px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.add-btn:hover {
+    background: #5a67d8;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(102,126,234,0.3);
+}
+
+.tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.tag {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 30px;
+    padding: 6px 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #334155;
+    transition: all 0.2s;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.tag:hover {
+    border-color: #cbd5e1;
+    background: #fefefe;
+}
+
+.tag .remove {
+    color: #94a3b8;
+    cursor: pointer;
+    font-size: 12px;
+    transition: color 0.2s;
+}
+
+.tag .remove:hover {
+    color: #ef4444;
+}
+
+.color-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-right: 4px;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+/* ========== PROMO & DELIVERY ROWS ========== */
+#deliveryFeeList,
+#promoList {
+    margin-bottom: 12px;
+}
+
+.promo-row,
+.delivery-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    background: white;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+.promo-row select,
+.promo-row input,
+.delivery-row select,
+.delivery-row input {
+    padding: 10px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 13px;
+    background: white;
+    transition: border-color 0.3s;
+}
+
+.promo-row select:focus,
+.promo-row input:focus,
+.delivery-row select:focus,
+.delivery-row input:focus {
+    border-color: #667eea;
+    outline: none;
+}
+
+.promo-row select { min-width: 150px; }
+.promo-row input { flex: 1; min-width: 120px; }
+.delivery-row input { width: 120px; }
+
+/* Global Delivery */
+.global-delivery {
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.global-delivery label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    font-size: 13px;
+    color: #475569;
+}
+
+.global-delivery input {
+    width: 160px;
+    padding: 10px 12px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 14px;
+}
+
+/* ========== FORM ACTIONS ========== */
+.form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.submit-btn {
+    flex: 2;
+    padding: 14px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s;
+    box-shadow: 0 2px 8px rgba(102,126,234,0.3);
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102,126,234,0.4);
+}
+
+.submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.reset-btn {
+    flex: 1;
+    padding: 14px;
+    background: #f1f5f9;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.reset-btn:hover {
+    background: #e2e8f0;
+    transform: translateY(-2px);
+}
+
+/* ========== TOAST NOTIFICATION ========== */
+.toast {
+    position: fixed;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(8px);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 40px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 3000;
+    transition: transform 0.3s ease;
+    white-space: nowrap;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    pointer-events: none;
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ========== RESPONSIVE DESIGN ========== */
+@media (max-width: 600px) {
+    .form-container {
+        padding: 15px;
+    }
+    
+    .form-section {
+        padding: 16px;
+        border-radius: 20px;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .image-preview-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+    
+    .promo-row,
+    .delivery-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .promo-row select,
+    .promo-row input,
+    .delivery-row select,
+    .delivery-row input {
+        width: 100%;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .submit-btn, .reset-btn {
+        width: 100%;
+    }
+    
+    .toast {
+        white-space: normal;
+        text-align: center;
+        max-width: 85%;
+        bottom: 80px;
+    }
+    
+    .global-delivery input {
+        width: 100%;
+    }
+}
+
+@media (max-width: 450px) {
+    .image-preview-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .bottom-nav {
+        padding: 8px 16px 18px;
+    }
+    
+    .nav-item span {
+        font-size: 10px;
+    }
+    
+    .nav-item i {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 350px) {
+    .image-preview-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-section h3 {
+        font-size: 15px;
+    }
+    
+    .tag {
+        font-size: 12px;
+        padding: 4px 12px;
+    }
+}
+
+/* ========== UTILITY CLASSES ========== */
+.text-center {
+    text-align: center;
+}
+
+.mt-2 { margin-top: 8px; }
+.mt-3 { margin-top: 12px; }
+.mt-4 { margin-top: 16px; }
+.mb-2 { margin-bottom: 8px; }
+.mb-3 { margin-bottom: 12px; }
+.mb-4 { margin-bottom: 16px; }
+
+.hide {
+    display: none !important;
+}
+
+/* ========== SCROLLBAR STYLING ========== */
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}/* admin-index.css - Complete styles for Capital Zone Admin Panel */
+/* This file provides the base styling for all admin pages including add-items.html */
+
+/* ========== RESET & GLOBAL ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #f5f7fb;
+    color: #1e293b;
+    line-height: 1.5;
+    overflow-x: hidden;
+}
+
+/* ========== LOADING SCREEN ========== */
+#loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+#loading.hide {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(255,255,255,0.3);
+    border-top: 4px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#loading p {
+    color: white;
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+/* ========== APP CONTAINER ========== */
+.app {
+    min-height: 100vh;
+    padding-bottom: 70px;
+}
+
+/* ========== HEADER ========== */
+header {
+    background: white;
+    padding: 15px 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.shop-name {
+    font-size: 18px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.header-icons {
+    display: flex;
+    gap: 12px;
+}
+
+.header-icons button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #64748b;
+    transition: color 0.3s;
+}
+
+.header-icons button:hover {
+    color: #667eea;
+}
+
+/* ========== BOTTOM NAVIGATION ========== */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 20px 20px;
+    box-shadow: 0 -2px 15px rgba(0,0,0,0.08);
+    z-index: 100;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    color: #94a3b8;
+    transition: color 0.3s;
+    font-size: 12px;
+}
+
+.nav-item i {
+    font-size: 22px;
+}
+
+.nav-item.active {
+    color: #667eea;
+}
+
+.nav-item:hover:not(.active) {
+    color: #475569;
+}
+
+/* ========== FORM CONTAINER ========== */
+.form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* ========== PAGE HEADER (for add-items) ========== */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 0 20px;
+}
+
+.page-header h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.page-header h2 i {
+    color: #667eea;
+}
+
+.back-btn {
+    width: 40px;
+    height: 40px;
+    background: #f1f5f9;
+    border: none;
+    border-radius: 12px;
+    color: #475569;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.back-btn:hover {
+    background: #667eea;
+    color: white;
+    transform: translateX(-3px);
+}
+
+/* ========== FORM SECTIONS ========== */
+.form-section {
+    background: white;
+    border-radius: 24px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: box-shadow 0.3s;
+}
+
+.form-section:hover {
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.form-section h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-left: 3px solid #667eea;
+    padding-left: 12px;
+}
+
+.form-section h3 i {
+    color: #667eea;
+    font-size: 18px;
+}
+
+.required {
+    color: #ef4444;
+    margin-left: 3px;
+}
+
+/* ========== FORM GROUPS ========== */
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 16px;
+}
+
+.form-row .form-group {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: #475569;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 14px;
+    transition: all 0.3s;
+    font-family: 'Inter', sans-serif;
+    background: white;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+    outline: none;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.error-message {
+    color: #ef4444;
+    font-size: 12px;
+    margin-top: 5px;
+    min-height: 18px;
+}
+
+/* ========== IMAGE UPLOAD ========== */
+.image-upload-area {
+    border: 2px dashed #cbd5e1;
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-bottom: 15px;
+    background: #fafcff;
+}
+
+.image-upload-area:hover {
+    border-color: #667eea;
+    background: #f8faff;
+    transform: translateY(-2px);
+}
+
+.image-upload-area i {
+    font-size: 42px;
+    color: #667eea;
+    margin-bottom: 12px;
+}
+
+.image-upload-area p {
+    color: #475569;
+    font-size: 14px;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.image-upload-area small {
+    color: #94a3b8;
+    font-size: 12px;
+}
+
+.image-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.image-preview-item {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    transition: all 0.3s;
+    background: #f1f5f9;
+}
+
+.image-preview-item:hover {
+    border-color: #667eea;
+    transform: scale(1.02);
+}
+
+.image-preview-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.image-preview-item .remove-image {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 26px;
+    height: 26px;
+    background: rgba(239,68,68,0.9);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    transition: all 0.3s;
+    opacity: 0;
+}
+
+.image-preview-item:hover .remove-image {
+    opacity: 1;
+}
+
+.image-preview-item .remove-image:hover {
+    background: #dc2626;
+    transform: scale(1.1);
+}
+
+/* ========== VARIATIONS SECTION ========== */
+.variation-section {
+    background: #f8fafc;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 5px;
+}
+
+.variation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.variation-header h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.add-btn {
+    padding: 8px 16px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.add-btn:hover {
+    background: #5a67d8;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(102,126,234,0.3);
+}
+
+.tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.tag {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 30px;
+    padding: 6px 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #334155;
+    transition: all 0.2s;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.tag:hover {
+    border-color: #cbd5e1;
+    background: #fefefe;
+}
+
+.tag .remove {
+    color: #94a3b8;
+    cursor: pointer;
+    font-size: 12px;
+    transition: color 0.2s;
+}
+
+.tag .remove:hover {
+    color: #ef4444;
+}
+
+.color-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-right: 4px;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+/* ========== PROMO & DELIVERY ROWS ========== */
+#deliveryFeeList,
+#promoList {
+    margin-bottom: 12px;
+}
+
+.promo-row,
+.delivery-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    background: white;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+.promo-row select,
+.promo-row input,
+.delivery-row select,
+.delivery-row input {
+    padding: 10px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 13px;
+    background: white;
+    transition: border-color 0.3s;
+}
+
+.promo-row select:focus,
+.promo-row input:focus,
+.delivery-row select:focus,
+.delivery-row input:focus {
+    border-color: #667eea;
+    outline: none;
+}
+
+.promo-row select { min-width: 150px; }
+.promo-row input { flex: 1; min-width: 120px; }
+.delivery-row input { width: 120px; }
+
+/* Global Delivery */
+.global-delivery {
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.global-delivery label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    font-size: 13px;
+    color: #475569;
+}
+
+.global-delivery input {
+    width: 160px;
+    padding: 10px 12px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 14px;
+}
+
+/* ========== FORM ACTIONS ========== */
+.form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.submit-btn {
+    flex: 2;
+    padding: 14px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s;
+    box-shadow: 0 2px 8px rgba(102,126,234,0.3);
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102,126,234,0.4);
+}
+
+.submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.reset-btn {
+    flex: 1;
+    padding: 14px;
+    background: #f1f5f9;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.reset-btn:hover {
+    background: #e2e8f0;
+    transform: translateY(-2px);
+}
+
+/* ========== TOAST NOTIFICATION ========== */
+.toast {
+    position: fixed;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(8px);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 40px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 3000;
+    transition: transform 0.3s ease;
+    white-space: nowrap;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    pointer-events: none;
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ========== RESPONSIVE DESIGN ========== */
+@media (max-width: 600px) {
+    .form-container {
+        padding: 15px;
+    }
+    
+    .form-section {
+        padding: 16px;
+        border-radius: 20px;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .image-preview-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+    
+    .promo-row,
+    .delivery-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .promo-row select,
+    .promo-row input,
+    .delivery-row select,
+    .delivery-row input {
+        width: 100%;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .submit-btn, .reset-btn {
+        width: 100%;
+    }
+    
+    .toast {
+        white-space: normal;
+        text-align: center;
+        max-width: 85%;
+        bottom: 80px;
+    }
+    
+    .global-delivery input {
+        width: 100%;
+    }
+}
+
+@media (max-width: 450px) {
+    .image-preview-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .bottom-nav {
+        padding: 8px 16px 18px;
+    }
+    
+    .nav-item span {
+        font-size: 10px;
+    }
+    
+    .nav-item i {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 350px) {
+    .image-preview-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-section h3 {
+        font-size: 15px;
+    }
+    
+    .tag {
+        font-size: 12px;
+        padding: 4px 12px;
+    }
+}
+
+/* ========== UTILITY CLASSES ========== */
+.text-center {
+    text-align: center;
+}
+
+.mt-2 { margin-top: 8px; }
+.mt-3 { margin-top: 12px; }
+.mt-4 { margin-top: 16px; }
+.mb-2 { margin-bottom: 8px; }
+.mb-3 { margin-bottom: 12px; }
+.mb-4 { margin-bottom: 16px; }
+
+.hide {
+    display: none !important;
+}
+
+/* ========== SCROLLBAR STYLING ========== */
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading">
+        <div class="spinner"></div>
+        <p>CZone Admin</p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="app" id="mainContent">
+        <!-- Header -->
+        <header>
+            <div class="header-top">
+                <div class="logo-area">
+                    <img id="adminLogo" class="logo" src="/IMG_20260313_225034.png" alt="Capital Zone">
+                    <span class="shop-name">Add Item</span>
+                </div>
+                <div class="header-icons">
+                    <button class="back-btn" id="backBtn">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Add Item Form -->
+        <div class="form-container" style="padding: 20px;">
+            <form id="addItemForm">
+                <!-- Basic Information -->
+                <div class="form-section">
+                    <h3><i class="fas fa-info-circle"></i> Basic Information</h3>
+                    <div class="form-group">
+                        <label>Product Title <span class="required">*</span></label>
+                        <input type="text" id="productTitle" placeholder="e.g. Samsung Galaxy S21" required>
+                        <div class="error-message" id="titleError"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Regular Price (LKR) <span class="required">*</span></label>
+                            <input type="number" id="regularPrice" placeholder="e.g. 45000" min="0" required>
+                            <div class="error-message" id="priceError"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Discount Price (LKR)</label>
+                            <input type="number" id="discountPrice" placeholder="e.g. 42500" min="0">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Stock Quantity</label>
+                            <input type="number" id="stockQuantity" placeholder="e.g. 100" min="0" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Sold Count</label>
+                            <input type="number" id="soldCount" placeholder="e.g. 45" min="0" value="0">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Category <span class="required">*</span></label>
+                            <select id="productCategory" required>
+                                <option value="">Select Category</option>
+                                <option value="electronics">Electronics</option>
+                                <option value="fashion">Fashion</option>
+                                <option value="home">Home & Living</option>
+                                <option value="sports">Sports</option>
+                                <option value="books">Books</option>
+                                <option value="toys">Toys & Games</option>
+                                
+                                <option value="today">today</option>
+                                
+                   <option value="flashdeal">flashdeal</option>             
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Status</label>
+                            <select id="productStatus">
+                                <option value="available">Available</option>
+                                <option value="sold">Sold Out</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Description <span class="required">*</span></label>
+                        <textarea id="productDescription" placeholder="Enter detailed product description..." required></textarea>
+                        <div class="error-message" id="descriptionError"></div>
+                    </div>
+                </div>
+
+                <!-- Images (Base64) -->
+                <div class="form-section">
+                    <h3><i class="fas fa-image"></i> Product Images</h3>
+                    <div class="image-upload-area" id="imageUploadArea">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Click or drag images (max 13 MB each)</p>
+                        <input type="file" id="imageInput" multiple accept="image/*" style="display: none;">
+                    </div>
+                    <div class="image-preview-grid" id="imagePreviewGrid"></div>
+                    <div class="error-message" id="imageError"></div>
+                </div>
+
+                <!-- Colors -->
+                <div class="form-section">
+                    <h3><i class="fas fa-palette"></i> Colors</h3>
+                    <div class="variation-section">
+                        <div class="variation-header">
+                            <h4>Add Color</h4>
+                            <button type="button" class="add-btn" id="addColorBtn">+ Add Color</button>
+                        </div>
+                        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                            <input type="color" id="colorPicker" value="#ff0000" style="width: 50px; height: 40px;">
+                            <input type="text" id="colorName" placeholder="Color name (e.g. Red)" style="flex:1;">
+                        </div>
+                        <div class="tag-container" id="colorTags"></div>
+                    </div>
+                </div>
+
+                <!-- Sizes -->
+                <div class="form-section">
+                    <h3><i class="fas fa-ruler"></i> Sizes</h3>
+                    <div class="variation-section">
+                        <div class="variation-header">
+                            <h4>Add Size</h4>
+                            <button type="button" class="add-btn" id="addSizeBtn">+ Add Size</button>
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="sizeValue" placeholder="e.g. S, M, L, XL" style="flex:1;">
+                        </div>
+                        <div class="tag-container" id="sizeTags"></div>
+                    </div>
+                </div>
+
+                <!-- Delivery Fees -->
+                <div class="form-section">
+                    <h3><i class="fas fa-truck"></i> Delivery Fees</h3>
+                    <div class="global-delivery">
+                        <label>Global Delivery Fee (LKR)</label>
+                        <input type="number" id="globalDeliveryFee" placeholder="e.g. 350" value="350" min="0">
+                    </div>
+                    <div class="variation-section">
+                        <div class="variation-header">
+                            <h4>Customer Specific Delivery Fees</h4>
+                            <button type="button" class="add-btn" id="addDeliveryFeeBtn">+ Add Customer Fee</button>
+                        </div>
+                        <div id="deliveryFeeList"></div>
+                        <div class="tag-container" id="deliveryFeeTags"></div>
+                    </div>
+                </div>
+
+                <!-- Promo Codes -->
+                <div class="form-section">
+                    <h3><i class="fas fa-tag"></i> Promo Codes for Customers</h3>
+                    <div class="variation-section">
+                        <div class="variation-header">
+                            <h4>Add Promo Code</h4>
+                            <button type="button" class="add-btn" id="addPromoBtn">+ Add Promo</button>
+                        </div>
+                        <div id="promoList"></div>
+                        <div class="tag-container" id="promoTags"></div>
+                    </div>
+                </div>
+
+                <!-- Submit Buttons -->
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <i class="fas fa-cloud-upload-alt"></i> Add Item
+                    </button>
+                    <button type="button" class="reset-btn" id="resetBtn">
+                        <i class="fas fa-redo-alt"></i> Reset
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <div class="nav-item" data-page="index.html">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </div>
+            <div class="nav-item active">
+                <i class="fas fa-plus-circle"></i>
+                <span>Add</span>
+            </div>
+            <div class="nav-item" data-page="show-items.html">
+                <i class="fas fa-list"></i>
+                <span>Items</span>
+            </div>
+            <div class="nav-item" data-page="admin-account.html">
+                <i class="fas fa-user"></i>
+                <span>Account</span>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Toast Message -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
+    <script src="add-items.js"></script>
+</body>
+</html>

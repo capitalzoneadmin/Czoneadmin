@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Add Banner - CZone Admin</title>
+    <link rel="stylesheet" href="add-banner.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading">
+        <div class="spinner"></div>
+        <p>CZone Admin</p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="app" id="mainContent">
+        <!-- Header -->
+        <header>
+            <div class="header-top">
+                <div class="logo-area">
+                    <img id="adminLogo" class="logo" src="/IMG_20260313_225034.png" alt="CZ">
+                    <span class="shop-name">Add Banner</span>
+                </div>
+                <div class="header-icons">
+                    <button class="icon-btn" id="backBtn"><i class="fas fa-arrow-left"></i></button>
+                    <button class="icon-btn" id="refreshBtn"><i class="fas fa-sync-alt"></i></button>
+                </div>
+            </div>
+        </header>
+
+        <div class="content">
+            <!-- Add Banner Form - UPDATED with URL Input -->
+            <div class="form-section">
+                <h3><i class="fas fa-plus-circle"></i> Add New Banner</h3>
+                
+                <!-- NEW: Image URL Input instead of file upload -->
+                <div class="form-group">
+                    <label>Image URL <span style="color:#dc3545;">*</span></label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="url" id="imageUrlInput" class="url-input" placeholder="https://example.com/image.jpg" style="flex: 1;">
+                        <button type="button" id="testImageBtn" class="test-btn">Test</button>
+                    </div>
+                    <small class="help-text">Enter the direct URL of your image (from Imgur, Google Photos, etc.)</small>
+                    
+                    <!-- Image Preview -->
+                    <div class="image-preview-container" id="imagePreviewContainer" style="display: none; margin-top: 15px;">
+                        <img id="imagePreview" class="image-preview" src="#" alt="Preview">
+                        <button class="remove-image-btn" id="clearImageBtn"><i class="fas fa-times"></i></button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Banner Link (Optional)</label>
+                    <input type="url" id="bannerLink" placeholder="https://example.com">
+                    <small class="help-text">Leave empty if no link</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Banner Title (Optional)</label>
+                    <input type="text" id="bannerTitle" placeholder="e.g. Summer Sale">
+                </div>
+
+                <button class="submit-btn" id="addBannerBtn">
+                    <i class="fas fa-cloud-upload-alt"></i> Add Banner
+                </button>
+            </div>
+
+            <!-- Banners List -->
+            <div class="form-section">
+                <h3><i class="fas fa-images"></i> Existing Banners</h3>
+                <div id="noBanners" class="no-banners">
+                    <i class="fas fa-image"></i>
+                    <h3>No Banners Found</h3>
+                    <p>Add your first banner using the form above</p>
+                </div>
+                <div class="banners-list" id="bannersList"></div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <div class="nav-item" data-page="index.html"><i class="fas fa-home"></i><span>Home</span></div>
+            <div class="nav-item" data-page="add-items.html"><i class="fas fa-plus-circle"></i><span>Add</span></div>
+            <div class="nav-item" data-page="show-items.html"><i class="fas fa-list"></i><span>Items</span></div>
+            <div class="nav-item active"><i class="fas fa-image"></i><span>Banner</span></div>
+            <div class="nav-item" data-page="admin-account.html"><i class="fas fa-user"></i><span>Account</span></div>
+        </nav>
+    </div>
+
+    <!-- Edit Banner Modal - UPDATED with URL Input -->
+    <div id="editModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <i class="fas fa-arrow-left" id="closeEditModal"></i>
+                <h3>Edit Banner</h3>
+                <i class="fas fa-times" id="closeEditModalBtn"></i>
+            </div>
+            <div class="modal-body" id="editModalBody">
+                <!-- Edit form will be loaded here via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal-small">
+        <div class="modal-small-content">
+            <div class="modal-small-icon"><i class="fas fa-exclamation-triangle"></i></div>
+            <h3>Delete Banner</h3>
+            <p>Are you sure you want to delete this banner?</p>
+            <div class="modal-small-buttons">
+                <button class="modal-btn secondary" id="cancelDelete">Cancel</button>
+                <button class="modal-btn danger" id="confirmDelete">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="add-banner.js"></script>
+</body>
+</html>

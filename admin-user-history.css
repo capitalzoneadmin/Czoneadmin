@@ -1,0 +1,483 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #f5f7fa;
+}
+
+/* App Container */
+.app {
+    max-width: 480px;
+    margin: 0 auto;
+    background: #f5f7fa;
+    min-height: 100vh;
+    padding-bottom: 70px;
+    position: relative;
+}
+
+/* Header */
+header {
+    background: white;
+    padding: 1rem 1.2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.shop-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.header-icons {
+    display: flex;
+    gap: 8px;
+}
+
+.icon-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: #f0f0f0;
+    border-radius: 10px;
+    color: #555;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.icon-btn:hover {
+    background: #667eea;
+    color: white;
+}
+
+/* Search Section */
+.search-section {
+    padding: 1.2rem 1.2rem 0;
+    position: relative;
+}
+
+.search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 0 12px;
+}
+
+.search-container i {
+    color: #999;
+    font-size: 1rem;
+}
+
+.search-container input {
+    flex: 1;
+    padding: 12px 10px;
+    border: none;
+    outline: none;
+    font-size: 0.95rem;
+    background: transparent;
+}
+
+#clearSearch {
+    color: #999;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 8px;
+    display: none;
+}
+
+/* Suggestions */
+.suggestions {
+    position: absolute;
+    top: 100%;
+    left: 20px;
+    right: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    max-height: 250px;
+    overflow-y: auto;
+    z-index: 100;
+    display: none;
+    margin-top: 4px;
+}
+
+.suggestions.show {
+    display: block;
+    animation: slideDown 0.2s;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.suggestion-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.suggestion-item:hover {
+    background: #f5f5f5;
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.suggestion-avatar {
+    width: 36px;
+    height: 36px;
+    background: #667eea;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.suggestion-info {
+    flex: 1;
+}
+
+.suggestion-name {
+    font-weight: 600;
+    color: #333;
+}
+
+.suggestion-phone {
+    font-size: 0.85rem;
+    color: #667eea;
+}
+
+.suggestion-count {
+    font-size: 0.75rem;
+    color: #999;
+    margin-left: 8px;
+}
+
+/* Selected User */
+.selected-user {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: white;
+    border-radius: 16px;
+    padding: 15px;
+    margin: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    animation: slideDown 0.3s;
+}
+
+.user-avatar {
+    width: 48px;
+    height: 48px;
+    background: #f0f0f0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: #667eea;
+}
+
+.user-details {
+    flex: 1;
+}
+
+.user-name {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #333;
+    display: block;
+}
+
+.user-phone {
+    font-size: 0.9rem;
+    color: #667eea;
+}
+
+.clear-user-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: #f0f0f0;
+    border-radius: 50%;
+    color: #666;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.clear-user-btn:hover {
+    background: #dc3545;
+    color: white;
+}
+
+/* Filter Tabs */
+.filter-tabs {
+    display: flex;
+    gap: 8px;
+    padding: 0 20px 15px;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.filter-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.filter-tab {
+    padding: 8px 16px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #666;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.filter-tab.active {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+}
+
+/* Stats Cards */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 0 20px 20px;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 16px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.stat-value {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #667eea;
+    line-height: 1.2;
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    color: #999;
+    text-transform: uppercase;
+}
+
+/* No Data */
+.no-data {
+    text-align: center;
+    padding: 60px 20px;
+    display: none;
+}
+
+.no-data.show {
+    display: block;
+}
+
+.no-data i {
+    font-size: 4rem;
+    color: #ddd;
+    margin-bottom: 1rem;
+}
+
+.no-data h3 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.no-data p {
+    color: #999;
+    font-size: 0.9rem;
+}
+
+/* History List */
+.history-list {
+    padding: 0 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.history-card {
+    background: white;
+    border-radius: 16px;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    display: flex;
+    gap: 12px;
+    transition: 0.2s;
+    border: 1px solid #eee;
+}
+
+.history-card:hover {
+    transform: translateX(5px);
+    border-color: #667eea;
+}
+
+.history-image {
+    width: 70px;
+    height: 70px;
+    border-radius: 12px;
+    object-fit: cover;
+    background: #f9f9f9;
+}
+
+.history-info {
+    flex: 1;
+}
+
+.history-title {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 4px;
+}
+
+.history-meta {
+    display: flex;
+    gap: 12px;
+    font-size: 0.8rem;
+    color: #999;
+    margin-bottom: 6px;
+}
+
+.history-user {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    color: #667eea;
+    margin-bottom: 4px;
+}
+
+.history-user i {
+    font-size: 0.8rem;
+}
+
+.history-time {
+    font-size: 0.75rem;
+    color: #999;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Toast */
+.toast {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: rgba(0,0,0,0.9);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 40px;
+    font-size: 0.9rem;
+    z-index: 1200;
+    transition: transform 0.3s;
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 0;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+    border-radius: 20px 20px 0 0;
+    z-index: 100;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #999;
+    flex: 1;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.nav-item.active {
+    color: #667eea;
+    transform: translateY(-3px);
+}
+
+.nav-item i {
+    font-size: 1.4rem;
+}
+
+/* Responsive */
+@media (max-width: 400px) {
+    .history-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .history-image {
+        width: 100%;
+        height: 150px;
+    }
+}

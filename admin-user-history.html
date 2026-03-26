@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>User History - CZone Admin</title>
+    <link rel="stylesheet" href="admin-user-history.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        /* Emergency loading fix */
+        #loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.3s;
+        }
+        #loading.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        #loading p {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading">
+        <div class="spinner"></div>
+        <p>CZone Admin</p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="app" id="mainContent">
+        <!-- Header -->
+        <header>
+            <div class="header-top">
+                <div class="logo-area">
+                    <img id="adminLogo" class="logo" src="/admin/IMG_20260313_225034.png" alt="CZ">
+                    <span class="shop-name">User History</span>
+                </div>
+                <div class="header-icons">
+                    <button class="icon-btn" id="backBtn"><i class="fas fa-arrow-left"></i></button>
+                    <button class="icon-btn" id="refreshBtn"><i class="fas fa-sync-alt"></i></button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Search Section -->
+        <div class="search-section">
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search by phone number..." autocomplete="off">
+                <i class="fas fa-times" id="clearSearch"></i>
+            </div>
+            <div class="suggestions" id="suggestions"></div>
+        </div>
+
+        <!-- Selected User Info -->
+        <div class="selected-user" id="selectedUserInfo" style="display: none;">
+            <div class="user-avatar">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="user-details">
+                <span class="user-name" id="selectedUserName"></span>
+                <span class="user-phone" id="selectedUserPhone"></span>
+            </div>
+            <button class="clear-user-btn" id="clearUserBtn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="filter-tabs">
+            <button class="filter-tab active" data-filter="all">All Time</button>
+            <button class="filter-tab" data-filter="today">Today</button>
+            <button class="filter-tab" data-filter="week">This Week</button>
+            <button class="filter-tab" data-filter="month">This Month</button>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-value" id="totalItems">0</span>
+                <span class="stat-label">Total Views</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value" id="uniqueItems">0</span>
+                <span class="stat-label">Unique Products</span>
+            </div>
+        </div>
+
+        <!-- No Data Message -->
+        <div id="noData" class="no-data">
+            <i class="fas fa-history"></i>
+            <h3>No History Found</h3>
+            <p>Users haven't viewed any products yet</p>
+        </div>
+
+        <!-- History List -->
+        <div class="history-list" id="historyList"></div>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <div class="nav-item" data-page="admin-index.html"><i class="fas fa-home"></i><span>Home</span></div>
+            <div class="nav-item" data-page="add-items.html"><i class="fas fa-plus-circle"></i><span>Add</span></div>
+            <div class="nav-item" data-page="show-items.html"><i class="fas fa-list"></i><span>Items</span></div>
+            <div class="nav-item active"><i class="fas fa-history"></i><span>History</span></div>
+            <div class="nav-item" data-page="admin-account.html"><i class="fas fa-user"></i><span>Account</span></div>
+        </nav>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
+    <script src="admin-user-history.js"></script>
+</body>
+</html>

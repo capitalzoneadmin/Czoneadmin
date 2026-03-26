@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Cash on Delivery Management - Capital Zone Admin</title>
+    <link rel="stylesheet" href="eligible-cash-on-delivery.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading">
+        <div class="spinner"></div>
+        <p>Loading...</p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="admin-container" id="mainContent">
+        <!-- Header -->
+        <header>
+            <div class="header-top">
+                <div class="logo-area">
+                    <i class="fas fa-arrow-left" id="backBtn"></i>
+                    <span class="admin-title">Cash on Delivery Management</span>
+                </div>
+                <div class="header-icons">
+                    <i class="fas fa-home" id="homeIcon"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <div class="content-area">
+            <!-- Statistics Cards -->
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalUsers">0</h3>
+                        <p>Total COD Users</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="activeUsers">0</h3>
+                        <p>Active Users</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search Section -->
+            <div class="search-section">
+                <h3>Search User by Mobile Number</h3>
+                <div class="search-box">
+                    <div class="phone-input-group">
+                        <span class="country-code">+94</span>
+                        <input type="tel" id="searchPhone" placeholder="77 123 4567" maxlength="9">
+                        <button id="searchBtn" class="search-btn">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                    </div>
+                </div>
+                <div id="searchResult" class="search-result"></div>
+            </div>
+
+            <!-- Add/Edit COD User Section -->
+            <div class="user-management-section">
+                <h3>Manage COD Eligible Users</h3>
+                
+                <div class="form-group">
+                    <label>Select User</label>
+                    <select id="userSelect">
+                        <option value="">-- Select a user --</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Mobile Number</label>
+                    <div class="phone-input">
+                        <span class="country-code">+94</span>
+                        <input type="tel" id="userPhone" placeholder="77 123 4567" maxlength="9" readonly>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>User Name</label>
+                    <input type="text" id="userName" placeholder="User name" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>COD Limit Price (Rs.)</label>
+                    <input type="number" id="codLimit" placeholder="Enter maximum order amount for COD" step="100">
+                    <small class="help-text">Orders below this amount will be eligible for Cash on Delivery</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="userStatus">
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+
+                <div class="button-group">
+                    <button id="saveBtn" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Save Changes
+                    </button>
+                    <button id="clearBtn" class="btn btn-secondary">
+                        <i class="fas fa-eraser"></i> Clear
+                    </button>
+                    <button id="deleteBtn" class="btn btn-danger" style="display: none;">
+                        <i class="fas fa-trash"></i> Remove User
+                    </button>
+                </div>
+            </div>
+
+            <!-- COD Users List -->
+            <div class="users-list-section">
+                <h3>COD Eligible Users</h3>
+                <div class="table-container">
+                    <table id="codUsersTable">
+                        <thead>
+                            <tr>
+                                <th>Mobile</th>
+                                <th>Name</th>
+                                <th>Limit (Rs.)</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="codUsersList">
+                            <tr>
+                                <td colspan="5" class="text-center">Loading users...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="custom-modal">
+        <div class="modal-content">
+            <div class="modal-icon">
+                <i class="fas fa-question-circle"></i>
+            </div>
+            <h3>Confirm Action</h3>
+            <p id="confirmMessage">Are you sure you want to save these changes?</p>
+            <div class="modal-buttons">
+                <button class="modal-btn secondary" id="cancelConfirmBtn">Cancel</button>
+                <button class="modal-btn primary" id="confirmActionBtn">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="custom-modal">
+        <div class="modal-content">
+            <div class="modal-icon success">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Success!</h3>
+            <p id="successMessage">User has been added to COD eligible list</p>
+            <div class="modal-buttons">
+                <button class="modal-btn primary" id="closeSuccessBtn">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Message -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="eligible-cash-on-delivery.js"></script>
+</body>
+</html>

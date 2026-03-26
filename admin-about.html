@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>About Us - Capital Zone Sri Lanka</title>
+    <link rel="stylesheet" href="about.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Emergency loading fix */
+        #loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.3s;
+        }
+        #loading.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading">
+        <div class="spinner"></div>
+        <p>Capital Zone</p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="app" id="mainContent">
+        <!-- Header -->
+        <header>
+            <div class="header-top">
+                <div class="logo-area">
+                    <i class="fas fa-arrow-left" id="backBtn"></i>
+                    <span class="shop-name">About Us</span>
+                </div>
+                <div class="header-icons">
+                    <i class="fas fa-home" id="homeIcon"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <div class="hero-section" id="heroSection">
+            <img id="heroImage" class="hero-image" src="/IMG_20260313_225034.png" alt="Capital Zone">
+            <div class="hero-overlay">
+                <h1 id="heroTitle">Capital Zone Sri Lanka</h1>
+                <p id="heroSubtitle">Your Trusted Online Shopping Partner</p>
+            </div>
+        </div>
+
+        <!-- Content Sections -->
+        <div class="content-sections" id="contentSections">
+            <!-- Content will be loaded from Firebase -->
+        </div>
+
+        <!-- Team Section -->
+        <div class="team-section" id="teamSection">
+            <h2>Our Team</h2>
+            <div class="team-grid" id="teamGrid">
+                <!-- Team members will be loaded from Firebase -->
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-section">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-info">
+                    <span class="stat-value" id="customerCount">0</span>
+                    <span class="stat-label">Happy Customers</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-box"></i>
+                </div>
+                <div class="stat-info">
+                    <span class="stat-value" id="orderCount">0</span>
+                    <span class="stat-label">Orders Delivered</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-truck"></i>
+                </div>
+                <div class="stat-info">
+                    <span class="stat-value" id="deliveryCount">0</span>
+                    <span class="stat-label">Cities Covered</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="contact-section">
+            <h2>Get in Touch</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <h4>Address</h4>
+                        <p id="contactAddress">Colombo, Sri Lanka</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <div>
+                        <h4>Phone</h4>
+                        <p id="contactPhone">+94 77 123 4567</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <h4>Email</h4>
+                        <p id="contactEmail">info@capitalzone.lk</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <h4>Working Hours</h4>
+                        <p id="contactHours">Mon - Sat: 9:00 AM - 8:00 PM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Map Section -->
+        <div class="map-section">
+            <iframe 
+                id="mapFrame"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126743.5853220158!2d79.848205!3d6.927079!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2596d8c58d0d9%3A0xe3d07e0a7f5b8f0!2sColombo%2C%20Sri%20Lanka!5e0!3m2!1sen!2s!4v1234567890"
+                width="100%" 
+                height="250" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy">
+            </iframe>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <div class="nav-item" data-page="index.html"><i class="fas fa-home"></i><span>Home</span></div>
+            <div class="nav-item" data-page="add-to-cart.html"><i class="fas fa-shopping-cart"></i><span>Cart</span></div>
+            <div class="nav-item" data-page="messenger.html"><i class="fas fa-comment"></i><span>Chat</span></div>
+            <div class="nav-item" data-page="alert.html"><i class="fas fa-bell"></i><span>Alerts</span></div>
+            <div class="nav-item" data-page="account.html"><i class="fas fa-user"></i><span>Account</span></div>
+        </nav>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
+    <script src="about.js"></script>
+</body>
+</html>

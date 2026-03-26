@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Edit Privacy Policy - CZone Admin</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        .editor-section {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #444;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .form-group textarea {
+            min-height: 200px;
+            resize: vertical;
+        }
+        
+        .section-row {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .remove-section {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .add-section-btn {
+            width: 100%;
+            padding: 15px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .save-btn {
+            flex: 2;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .preview-btn {
+            flex: 1;
+            padding: 15px;
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="loading"><div class="spinner"></div><p>CZone Admin</p></div>
+    <div class="app" id="mainContent">
+        <header>
+            <div class="header-top">
+                <div class="logo-area">
+                    <img id="adminLogo" class="logo" src="/admin/IMG_20260313_225034.png" alt="CZ">
+                    <span class="shop-name">Edit Privacy Policy</span>
+                </div>
+                <div class="header-icons">
+                    <button class="icon-btn" id="backBtn"><i class="fas fa-arrow-left"></i></button>
+                </div>
+            </div>
+        </header>
+
+        <div class="editor-section">
+            <h3><i class="fas fa-shield-alt"></i> Privacy Policy Editor</h3>
+            
+            <div class="form-group">
+                <label>Introduction</label>
+                <textarea id="introduction" rows="4">We are committed to protecting your privacy...</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>Information We Collect</label>
+                <textarea id="information" rows="4">We collect name, phone number, address...</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>How We Use Your Information</label>
+                <textarea id="usage" rows="4">To process orders and improve service...</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>Information Sharing</label>
+                <textarea id="sharing" rows="4">We share with delivery partners only...</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>Data Security</label>
+                <textarea id="security" rows="4">We use industry-standard security...</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>Your Rights</label>
+                <textarea id="rights" rows="4">You can access, correct, or delete your data...</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>Contact Information</label>
+                <textarea id="contact" rows="3">Email: privacy@capitalzone.lk, Phone: +94 77 123 4567</textarea>
+            </div>
+            
+            <div class="button-group">
+                <button class="save-btn" id="saveBtn"><i class="fas fa-save"></i> Save to Firebase</button>
+                <button class="preview-btn" id="previewBtn"><i class="fas fa-eye"></i> Preview</button>
+            </div>
+        </div>
+
+        <nav class="bottom-nav">
+            <div class="nav-item" data-page="admin-index.html"><i class="fas fa-home"></i><span>Home</span></div>
+            <div class="nav-item" data-page="add-items.html"><i class="fas fa-plus-circle"></i><span>Add</span></div>
+            <div class="nav-item active"><i class="fas fa-edit"></i><span>Policy</span></div>
+            <div class="nav-item" data-page="admin-account.html"><i class="fas fa-user"></i><span>Account</span></div>
+        </nav>
+    </div>
+    
+    <div id="toast" class="toast"></div>
+    
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="admin-privacy-policy.js"></script>
+</body>
+</html>
